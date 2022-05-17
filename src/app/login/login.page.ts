@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
-// import { FireBaseService } from '../zservices/fire-base.service';
 import { UtilitiesService } from '../service/utilities.service';
 import { FirebaseAuthService } from '../service/firebase-auth.service';
 import { FirebaseApiService } from '../service/firebase-api.service';
@@ -27,7 +26,6 @@ export class LoginPage implements OnInit {
               private loadingController: LoadingController,
               private firebaseApi:FirebaseApiService,
               private firebaseAuth : FirebaseAuthService,
-              // private usuarioInfo: UtilitiesService,
               private router: Router,
               private utilities : UtilitiesService
                 ) { }
@@ -41,11 +39,11 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
-        //Credential login form EMAIL PASSWORD
-        this.credentialForm = this.fb.group({
-          email:['',[Validators.required, Validators.email]],
-          password:['',[Validators.required,Validators.minLength(6)]],
-        })
+    //Credential login form EMAIL PASSWORD
+    this.credentialForm = this.fb.group({
+      email:['',[Validators.required, Validators.email]],
+      password:['',[Validators.required,Validators.minLength(6)]],
+    })
   }
 
   async  signIn(){
@@ -64,7 +62,6 @@ export class LoginPage implements OnInit {
           await this.utilities.saveIdUser(res.user.uid);
           await this.utilities.saveTokenUser(res.user.getIdToken());
           await this.loadDataFromApi();
-          // await this.firebaseService.getAccountData();
           this.router.navigateByUrl('/principal', {replaceUrl: true});
         }else{
           loading.dismiss();
@@ -85,10 +82,6 @@ export class LoginPage implements OnInit {
   }
   
   async loadDataFromApi(){
-    console.log('LOAD DATA FROM API');
-    // console.log('AQUI EMPIEZA TODO___________________________________________________________________________________');
-    // console.log(' this.utilities.getToken()', this.utilities.getToken());
-    // console.log('this.utilities.getIdUser()',this.utilities.getIdUser());
     await this.firebaseApi.getAccountData();
   }
 

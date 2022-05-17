@@ -65,7 +65,6 @@ export class FirebaseAuthService {
     let url = await this.utilities.getUrlType(urlType)
     let accessToken = await credential.user._delegate.accessToken;
     const apiUrl = `${url}${uid}.json?auth=${accessToken}`;
-    console.log('apiUrl',apiUrl);
     let json = form
     json = JSON.stringify(json);
     return await this.http.post(`${apiUrl}`, json, this.httpOptions).pipe(map( data => data)).toPromise();

@@ -28,7 +28,7 @@ export class UtilitiesService {
   saveIdUser(id){
     this.idUser = id;
   }
-  //Obtiene la del usuario activo
+  //Obtiene la id del usuario activo
   getIdUser(){
     return this.idUser;
   }
@@ -42,12 +42,11 @@ export class UtilitiesService {
   }
 
   async getDataUser(){
-    console.log('this.dataUser',this.dataUser);
     return await this.dataUser;
   }
 
   async saveDataUser(data){
-    console.log('_______________________________________________________');
+    console.log('_______________________________________________________________________');
     console.log('data',data);
     this.dataUser = await data;
   }
