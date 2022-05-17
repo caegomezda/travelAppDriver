@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentsIonicService } from '../zservices/components-ionic.service';
+// import { ComponentsIonicService } from '../components/components-ionic.service';
 
 @Component({
   selector: 'app-driver',
@@ -8,11 +8,13 @@ import { ComponentsIonicService } from '../zservices/components-ionic.service';
 })
 export class DriverPage implements OnInit {
 
-  constructor(public componentsIonic: ComponentsIonicService) { }
+  constructor(
+    // public componentsIonic: ComponentsIonicService
+    ) { }
 
   ngOnInit() {
   }
   presentarAlerta(){
-    this.componentsIonic.presentAlertConfirm();
+    // this.componentsIonic.presentAlertConfirm();
   }
 }

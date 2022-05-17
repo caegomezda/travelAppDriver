@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 
 import { Geolocation } from '@capacitor/geolocation';
-import { GoogleMapsService } from '../zservices/google-maps.service';
+import { GoogleMapsService } from '../service/google-maps.service';
 import { AlertController } from '@ionic/angular';
 
 declare var google;
@@ -36,10 +36,8 @@ constructor(private renderer:Renderer2,
             @Inject(DOCUMENT) private document,
             private googlemapsService: GoogleMapsService,
             private alertController : AlertController,
-            // public modalController: ModalController
             ) {
-              // console.log(google);
-             }
+}
 
 
 ngOnInit(): void {
@@ -82,12 +80,8 @@ this.marker = new google.maps.Marker({
 
 this.clickHandleEvent ();
 this.infowindow = new google.maps.InfoWindow();
-// if (this.label.titulo.length) {
     this. addMarker (position);
     this.setInfoWindow(this.marker, this.label.titulo, this.label.subtitulo)
-    
-// }
-
 }
 
 clickHandleEvent() {
@@ -121,9 +115,6 @@ setInfoWindow(marker: any, titulo: string, subtitulo: string) {
 async myLocation() {
   console.log('mylocation() click')
   Geolocation.getCurrentPosition().then( (res) => {
-
-         console. log('my location() - > get')
-
         const position = {
                lat: res.coords.latitude,
                lng: res.coords.longitude,
@@ -133,16 +124,10 @@ async myLocation() {
 }
 
 aceptar() {
- 
-  // console. log('click aceptar ->',this. positionSet);
-  // console.log('this.isAcept',this.isAcept);
   this.presentAlertConfirm();
 }
 
 aceptar2() {
- 
-  // console. log('click aceptar ->',this. positionSet);
-  // console.log('this.isAcept',this.isAcept);
   this.presentAlertConfirm2();
 }
 

@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
           await this.utilities.saveIdUser(res.user.uid);
           await this.utilities.saveTokenUser(res.user.getIdToken());
           await this.loadDataFromApi();
-          this.router.navigateByUrl('/principal', {replaceUrl: true});
+          this.router.navigateByUrl('/menu-principal', {replaceUrl: true});
         }else{
           loading.dismiss();
           this.isNotVerified();
