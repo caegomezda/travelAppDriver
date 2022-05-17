@@ -1,0 +1,61 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="ion-no-border">
+   <ion-buttons slot="start">
+     <ion-button routerLink="/home" color="primary">
+       <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+   </ion-buttons>
+   <ion-buttons slot="end">
+     <ion-button class="regular" routerLink="/signup">Registrar</ion-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div id="header">
+    <img src="assets/img/logotipo-travel.png" />
+    <h1 class="titulo">Inicia sesion</h1>
+  </div>
+  <div class="form">
+    <ion-list lines="none">
+      <form [formGroup]="credentialForm">
+        <ion-item color="ion-color-secondary-rgb" class="ion-margin-bottom" lines="none">
+          <ion-input 
+            type="text"
+            placeholder="{{'Correo'}}"
+            formControlName="email"
+            autofocus="true"
+            clearInput="true"
+            
+            required>
+          </ion-input>
+        </ion-item>
+        <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+          <span *ngIf="email.errors?.required">Correo requerido</span>
+          <span *ngIf="email.errors?.email">Correo errado</span>
+        </div>
+        <ion-item color="ion-color-secondary-rgb" class="ion-margin-bottom" lines="none">
+            <div>
+              <ion-input 
+              [(ngModel)]="passwordForm.clave" 
+              [type]="passwordTypeInput_1"  
+              placeholder="{{'Contraseña'}}"
+              formControlName="password"
+              clearInput="true"
+              required>
+            </ion-input>
+          </div>
+          <button  item-end class="btn_eye_icon"  (click)="togglePasswordMode(1)">
+            <div>
+              <ion-icon  [name]="(passwordTypeInput_1 === 'text')?'eye':'eye-off'"></ion-icon>
+            </div>
+          </button>
+        </ion-item>
+        <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+          <span *ngIf="password.errors?.required">Contraseña requerida</span>
+          <span *ngIf="password.errors?.minlength">La constraseña debe tener al menos 6 caracteres</span>
+        </div>
+        <app-button  (click)="signIn()" texto="Iniciar sesión"></app-button>
+      </form>
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "travel-app-v2-1f864": {
+      "hosting": {
+        "app": [
+          "travel-app-v2-1f864"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "travel-app-v2-1f864"
+  }
+}
