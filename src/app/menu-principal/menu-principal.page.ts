@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
+import { UtilitiesService } from '../service/utilities.service';
 
 @Component({
   selector: 'app-menu-principal',
@@ -8,7 +9,9 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class MenuPrincipalPage implements OnInit {
 subjects;
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private utilities : UtilitiesService) { }
 
   ngOnInit() {
     this.subjects=[
@@ -34,9 +37,9 @@ subjects;
       },
     ];
   }
+  
 
   goToSubject(item){
-    console.log(item.id)
     this.router.navigateByUrl(item.id, {replaceUrl: true});
   }
 }

@@ -5,8 +5,8 @@ import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } fr
 // import { Plugins } from '@capacitor/core';
 
 import { Geolocation } from '@capacitor/geolocation';
-import { GoogleMapsService } from '../zservices/google-maps.service';
-import { UtilitiesService } from '../zservices/utilities.service';
+import { GoogleMapsService } from '../service/google-maps.service';
+import { UtilitiesService } from '../service/utilities.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -73,11 +73,8 @@ constructor(private renderer:Renderer2,
             private utilities : UtilitiesService,
             private loandingCtrl: LoadingController,
             private router: Router
-            // public modalController: ModalController
             ) {
-              // console.log(google);
-             }
-
+}
 
 ngOnInit(): void {
   this.init();
@@ -87,7 +84,6 @@ ngOnInit(): void {
 
 ionViewWillEnter(){
   this.getUserData();
-  // console.log('this.userData',this.userData);
 }
 
 async getUserData(){
@@ -96,7 +92,6 @@ async getUserData(){
   this.userData = result
   console.log('___________________________________');
   console.log('this.userData',this.userData);
-
 }
 
 async init() {
@@ -128,12 +123,8 @@ this.marker = new google.maps.Marker({
 
 this.clickHandleEvent ();
 this.infowindow = new google.maps.InfoWindow();
-// if (this.label.titulo.length) {
     this. addMarker (position);
     this.setInfoWindow(this.marker, this.label.titulo, this.label.subtitulo)
-    
-// }
-
 this.renderMarkers();
 
 }
@@ -231,9 +222,6 @@ async presentLoading() {
     duration: 1000
   });
   await loading.present();
-
-  // const { role, data } = await loading.onDidDismiss();
-  // console.log('Loading dismissed!');
 }
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilitiesService } from '../zservices/utilities.service';
+import { UtilitiesService } from '../service/utilities.service';
 
 @Component({
   selector: 'app-profile',

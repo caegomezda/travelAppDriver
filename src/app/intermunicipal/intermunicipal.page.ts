@@ -5,7 +5,7 @@ import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } fr
 // import { Plugins } from '@capacitor/core';
 
 import { Geolocation } from '@capacitor/geolocation';
-import { GoogleMapsService } from '../zservices/google-maps.service';
+import { GoogleMapsService } from '../service/google-maps.service';
 
 // const {Geolocation} = Plugins;
 declare var google: any;
@@ -38,16 +38,13 @@ export class IntermunicipalPage implements OnInit {
 constructor(private renderer:Renderer2,
             @Inject(DOCUMENT) private document,
             private googlemapsService: GoogleMapsService,
-            // public modalController: ModalController
             ) {
-              // console.log(google);
-             }
+}
 
 
 ngOnInit(): void {
   this.init();
   this.myLocation();
-  // this.initMap();
 }
 async init() {
   this.googlemapsService.init(this.renderer, this.document). then( () =>{
@@ -78,12 +75,8 @@ this.marker = new google.maps.Marker({
 
 this.clickHandleEvent ();
 this.infowindow = new google.maps.InfoWindow();
-// if (this.label.titulo.length) {
     this. addMarker (position);
     this.setInfoWindow(this.marker, this.label.titulo, this.label.subtitulo)
-    
-// }
-
 }
 
 clickHandleEvent() {
