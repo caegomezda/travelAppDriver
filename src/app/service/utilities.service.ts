@@ -11,10 +11,20 @@ export class UtilitiesService {
   item:any;
   correoUsuario:any;
   dataUser:any;
+  userCredential:any;
+  d = new Date();
   private userURL = environment.urlConfing.USERURL;
   private driverURL = environment.urlConfing.DRIVERTURL;
   private movementURL = environment.urlConfing.MOVEMENTURL;
   constructor() { }
+
+  // saveUserCredential(userCredential){
+  //   this.userCredential = userCredential;    
+  // }
+
+  // getUserCredential(){
+  //   return this.userCredential
+  // }
 
   saveUsu(correo){
     this.correoUsuario = correo;
@@ -62,5 +72,21 @@ export class UtilitiesService {
       default:
         break;
     }
+  }
+
+  fechaHoyInv(Ndias){
+    let dd = this.d.getDate() + Ndias;
+    let mm = this.d.getMonth() + 1;
+    let yy = this.d.getFullYear();
+    let myDateString = yy + "-" + mm + "-" +dd
+    if (dd<10 && mm>10) {
+      myDateString = yy + "-" + mm + "-" + "0" + dd
+    } else if (mm<10 && dd>10) {
+      myDateString = yy + "-" + "0" + mm + "-"+dd
+    }else if(dd<10 && mm<10){
+      myDateString = yy + "-" +"0"+ mm + "-" + "0" + dd
+    }
+    return [myDateString,this.d]
+    // + "T00:00:00-01:00";
   }
 }

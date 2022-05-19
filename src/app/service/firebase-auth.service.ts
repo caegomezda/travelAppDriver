@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from '../aInterfaces/fire-base-interface';
+import { FirebaseApiService } from './firebase-api.service';
 import { UtilitiesService } from './utilities.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseAuthService {
 
-  private  httpOptions:any= { headers: new HttpHeaders({ 'Content-Type':  'application/json'}) };
   currentUser: User = null;
   credential:any;
   constructor(
     private afAuth: AngularFireAuth,
-    private http:HttpClient,
+    private firebaseApi : FirebaseApiService,
     private utilities : UtilitiesService
     ) {
     this.afAuth.onAuthStateChanged((user:any )=> {
@@ -22,9 +21,15 @@ export class FirebaseAuthService {
     })
   }
 
-  signIn({email, password}){
+  async signIn({email, password}){
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
+  
+  // async getToken(){
+  //   let result = await (await this.afAuth.currentUser).getIdToken();
+
+  //   return result;
+  // }
 
   get isEmailVerified() :boolean {
     return (this.currentUser.emailVerified !== false) ? true : false;
@@ -46,28 +51,20 @@ export class FirebaseAuthService {
       email,
       password
     );
+    // this.utilities.saveUserCredential(this.credential);
     let creationTime = this.credential.user.metadata.createdAt;
     let uid = this.credential.user.uid;
     let newForm = {
-        email: email,
-        name:"",
-        creationDate:creationTime,
-        uid:uid,
-        isActive:true,
-        phone:"",
-        userType:"user"
+      email: email,
+      name:"",
+      creationDate:creationTime,
+      uid:uid,
+      isActive:true,
+      phone:"",
+      userType:"user"
     }
-    await this.AddInstance(this.credential,newForm,1);
+    this.firebaseApi.addUser(this.credential,newForm,1)
   }
 
-  async AddInstance(credential,form,urlType){
-    let uid = credential.user.uid;
-    let url = await this.utilities.getUrlType(urlType)
-    let accessToken = await credential.user._delegate.accessToken;
-    const apiUrl = `${url}${uid}.json?auth=${accessToken}`;
-    let json = form
-    json = JSON.stringify(json);
-    return await this.http.post(`${apiUrl}`, json, this.httpOptions).pipe(map( data => data)).toPromise();
-  }
   
 }

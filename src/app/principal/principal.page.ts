@@ -9,6 +9,7 @@ import { GoogleMapsService } from '../service/google-maps.service';
 import { UtilitiesService } from '../service/utilities.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { FirebaseApiService } from '../service/firebase-api.service';
 
 // const {Geolocation} = Plugins;
 // declare var google: any;
@@ -62,6 +63,7 @@ export class PrincipalPage implements OnInit {
   infowindow: any;
   positionSet: any;
   userData: any;
+  positionSetString:String = "ESTA ES LA DIRECCION";
   // public search:string='';
   @ViewChild('map') divMap: ElementRef;
 
@@ -72,7 +74,9 @@ constructor(private renderer:Renderer2,
             private alertController : AlertController,
             private utilities : UtilitiesService,
             private loandingCtrl: LoadingController,
-            private router: Router
+            private router: Router,
+            private firebaseApi:FirebaseApiService,
+
             ) {
 }
 
@@ -204,9 +208,11 @@ async presentAlertConfirm() {
         id: 'cancel-button',
       }, {
         text: 'Aceptar',
-        handler: () => {
-            this.presentLoading();
-            this.router.navigateByUrl('/data-driver', {replaceUrl: true});
+        handler: async () => {
+            await this.presentLoading();
+
+
+            // this.router.navigateByUrl('/data-driver', {replaceUrl: true});
           }
       }
     ]
@@ -219,9 +225,17 @@ async presentLoading() {
   const loading = await this.loandingCtrl.create({
     cssClass: 'my-custom-class',
     message: 'Realizando pedido...',
-    duration: 1000
+    duration: 5000
   });
+
+  await this.generateTaxiDelivery();
+  
+
   await loading.present();
+}
+
+async generateTaxiDelivery(){
+  return await this.firebaseApi.taxiDelivery(this.userData,this.positionSet,this.positionSetString);
 }
 
 
