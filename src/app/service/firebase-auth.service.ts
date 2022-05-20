@@ -61,9 +61,9 @@ export class FirebaseAuthService {
       uid:uid,
       isActive:true,
       phone:"",
-      userType:"user"
+      userType:"driver"
     }
-    this.firebaseApi.addUser(this.credential,newForm,1)
+    this.firebaseApi.addUser(this.credential,newForm,2)
   }
 
   
