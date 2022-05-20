@@ -14,9 +14,9 @@ export const environment = {
     measurementId: 'G-ZJQBLWDW8L',
   },
   urlConfing:{
-    USERURL: `${URL}user-api/`,
-    DRIVERTURL: `${URL}driver-api/`,
-    MOVEMENTURL: `${URL}movement-api/`,
+    USERURL: `${URL}user-api`,
+    DRIVERTURL: `${URL}driver-api`,
+    MOVEMENTURL: `${URL}movement-api`,
   }
 };
 

@@ -15,17 +15,27 @@ export class FirebaseApiService {
   ) { }
 
   async AddInstance(credential,form,urlType){
-    let uid = credential.user.uid;
+    let apiUrl = "";
+    console.log('AddInstance');
+    let uid = credential['uid'];
     let url = await this.utilities.getUrlType(urlType)
-    let accessToken = await credential.user._delegate.accessToken;
-    const apiUrl = `${url}${uid}.json?auth=${accessToken}`;
+    let accessToken = await credential['token'];
+    apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
+    if (urlType === 3) {
+      apiUrl = `${url}/movements.json?auth=${accessToken}`;
+    }
+    console.log('apiUrl',apiUrl);
     let json = form
     json = JSON.stringify(json);
     return await this.http.post(`${apiUrl}`, json, this.httpOptions).pipe(map( data => data)).toPromise();
   }
 
   async addUser(credential,newForm,urlType){
-    await this.AddInstance(credential,newForm,urlType);
+    let credentialUser = {
+      uid:credential.user.uid,
+      token:await credential.user._delegate.accessToken
+    }
+    await this.AddInstance(credentialUser,newForm,urlType);
   }
 
   async getAccountData(){
@@ -42,7 +52,7 @@ export class FirebaseApiService {
     let url = await this.utilities.getUrlType(urlType);
     let uid = credential["uid"];
     let accessToken = credential["token"]
-    const apiUrl = `${url}${uid}.json?auth=${accessToken}`;
+    const apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
     let json = {}
     json = JSON.stringify(json);
     return  this.http.get(`${apiUrl}`, json).pipe(map( data => data)).toPromise();
@@ -62,9 +72,8 @@ export class FirebaseApiService {
       uid:userData['uid'],
       token:await this.utilities.getToken()
     }
-
     let newForm = {
-      creationDate:creationTime,
+      creationDate:creationTime[1],
       uiserId:credential['uid'],
       isActive:true,
       isPending:true,
@@ -73,9 +82,6 @@ export class FirebaseApiService {
       positionSet:positionSet,
       positionSetString:positionSetString
     }
-
-    console.log('newForm',newForm);
-    console.log('userData',userData);
     await this.AddInstance(credential,newForm,3);
   }
 

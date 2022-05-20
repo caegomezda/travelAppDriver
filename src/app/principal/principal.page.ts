@@ -228,8 +228,8 @@ async presentLoading() {
     duration: 5000
   });
 
-  await this.generateTaxiDelivery();
-  
+  let result  = await this.generateTaxiDelivery();
+  console.log('result',result);
 
   await loading.present();
 }
